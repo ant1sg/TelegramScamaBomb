@@ -51,7 +51,8 @@ def generate_fake_email():
     ]
 
     domains = ["gmail.com", "hotmail.com", "hotmail.fr", "orange.fr", "outlook.com"]
-    
+
+   
     random_first_name = random.choice(first_names).lower()
     random_last_name = random.choice(last_names).lower()
     random_domain = random.choice(domains)
@@ -60,9 +61,28 @@ def generate_fake_email():
     return f"{random_user}@{random_domain}"
 
 def generate_fake_password():
+    common_passwords = [
+        "123456", "password", "123456789", "12345678", "12345", "1234567", "qwerty", "111111",
+        "123123", "abc123", "password1", "1234", "iloveyou", "1q2w3e4r", "admin", "letmein", 
+        "welcome", "monkey", "123", "qwertyuiop", "princess", "654321", "superman", "asdfgh", 
+        "qazwsx", "password123", "sunshine", "dragon", "football", "000000", "trustno1", 
+        "123qwe", "lovely", "baseball", "master", "shadow", "michael", "666666", "123321", 
+        "batman", "passw0rd", "starwars", "hello", "freedom", "whatever", "q1w2e3r4", 
+        "letmein1", "zaq12wsx", "mypass", "123abc", "access", "secret", "charlie", "qwerty123", 
+        "liverpool", "cheese", "princess1", "ranger", "william", "magnum", "london", "robert", 
+        "qazxsw", "love", "password!", "pokemon", "pass123", "hannah", "ashley", "123654", 
+        "loveme", "flower", "buster", "harley", "summer", "amanda", "biteme", "cookie", 
+        "internet", "pepper", "carlos", "jordan", "ginger", "michelle", "hunter", "jessica", 
+        "tigger", "1989", "maverick", "computer", "andrew", "merlin", "justin", "trust", 
+        "bailey", "zxcvbnm", "buster", "thomas", "pepper", "dallas", "jennifer", "silver"
+    ]
+    
     length = random.randint(8, 24)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-
+    if random.choice([True, False]):
+        return ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(8, 24)))
+    else:
+        return random.choice(common_passwords)
+    
 # Initialize the counter
 counter = 0
 
@@ -87,21 +107,21 @@ while True:
         response_json = response.json()
         ok_value = response_json.get("ok", "N/A")
         
+
+
+        # Wait for a random amount of time between 60 and 300 seconds to emulate human behavior
+        sleep_time = random.randint(60, 300)
+        
         # Print the counter, status code, and the value of ok
-        print(f"Count: {counter}, Status Code: {response.status_code}, OK: {ok_value}, Email: {fake_email}, Password: {fake_password}")
-        
-        # Check if the counter has reached 100
-        if counter % 100 == 0:
-            print("Reached 100 requests, waiting for 30 seconds...")
-            time.sleep(30)
-        
+        print(f"Count: {counter}, Status Code: {response.status_code}, OK: {ok_value}, Email: {fake_email}, Password: {fake_password}, Sleep Time: {sleep_time}")
+        time.sleep(sleep_time)
+
         # Check if the response status code is 429
         if response.status_code == 429:
-            print("Received status code 429, waiting for 4 minutes...")
-            time.sleep(240)
+            print("Received status code 429, waiting for an extra 5 minutes...")
+            time.sleep(300)
+
         
     except Exception as e:
         print(f"An error occurred: {e}")
     
-    # Optional: Sleep for a very short time to avoid overwhelming the server
-    time.sleep(0.01)
