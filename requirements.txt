@@ -1,0 +1,8 @@
+certifi==2021.5.30
+charset-normalizer==2.0.12
+future==0.18.3
+idna==3.8
+iso8601==1.1.0
+PyYAML==6.0.1
+requests==2.27.1
+urllib3==1.26.20
